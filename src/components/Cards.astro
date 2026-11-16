@@ -1,0 +1,24 @@
+---
+import type { Card } from '../data/projects';
+
+interface Props {
+  cards: Card[];
+}
+
+const { cards } = Astro.props;
+const tilts = ['-2deg', '1.5deg', '-1deg'];
+---
+
+<div class="cards">
+  {
+    cards.map((card, i) => (
+      <div class="reveal">
+        <div class="note" style={`--r: ${tilts[i % tilts.length]}`}>
+          <p class="hand-note">{card.hand}</p>
+          <p class="label">{card.label}</p>
+          <p>{card.text}</p>
+        </div>
+      </div>
+    ))
+  }
+</div>

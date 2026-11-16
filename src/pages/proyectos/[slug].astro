@@ -1,0 +1,113 @@
+---
+import Base from '../../layouts/Base.astro';
+import Phone from '../../components/Phone.astro';
+import Cards from '../../components/Cards.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+const { project, next } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tilts = ['-3deg', '2deg', '-1.5deg', '3deg'];
+---
+
+<Base title={`${project.name} · Sara Ardila`} description={project.summary}>
+  <div class="bg-grid">
+    <section class="wrap hero" style="padding-top: 56px">
+      <div class="hero__text">
+        <a class="back" href={`${base}/#proyectos`}>← volver a la cuerda</a>
+        <p class="tag">{project.featured ? 'Proyecto principal · ' : ''}En desarrollo</p>
+        <h1 class="h1" style="font-size: clamp(3rem, 8vw, 6rem)">
+          {project.name}
+          {project.featured && <span class="hero__hand" style="font-size: 0.5em; line-height: 1">esta, la buena</span>}
+        </h1>
+        <p class="lead">{project.summary}</p>
+        <dl class="meta">
+          <div><dt class="label">Rol</dt><dd>{project.role}</dd></div>
+          <div><dt class="label">Stack</dt><dd>{project.stack}</dd></div>
+          <div><dt class="label">Estado</dt><dd>{project.status}</dd></div>
+        </dl>
+        <div class="btn-row">
+          <a class="btn" href={project.repo}>Código en GitHub</a>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 280px; display: flex; justify-content: center">
+        <div class="hang develop" style="width: auto">
+          <div class="pin" aria-hidden="true"></div>
+          <div class="hang__card" style="align-items: center">
+            <div class="photo" style={`background: var(--${project.tone}); padding: 22px 34px`}>
+              <div style="height: 400px; display: flex">
+                <Phone src={project.cover} alt={`Captura principal de ${project.name}`} />
+              </div>
+            </div>
+            <p class="polaroid__caption">recién revelada</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  {
+    project.shots.length > 0 && (
+      <section class="bg-stripes section">
+        <div class="wrap stack-col">
+          <h2 class="h2 h2--label reveal">
+            La hoja <span class="hand">de contactos.</span>
+          </h2>
+          <div class="shots">
+            {project.shots.map((shot, i) => (
+              <div class="reveal">
+                <figure class="shot develop" style={`--r: ${tilts[i % tilts.length]}`}>
+                  <Phone src={shot.src} alt={`${project.name}: ${shot.caption}`} />
+                  <figcaption class="polaroid__caption">{shot.caption}</figcaption>
+                </figure>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    project.howItsMade.length > 0 && (
+      <section class="section">
+        <div class="wrap stack-col">
+          <h2 class="h2 reveal">
+            Cómo está <span class="hand">hecha.</span>
+          </h2>
+          <Cards cards={project.howItsMade} />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="bg-sky-soft" style="padding-block: 80px">
+    <div class="wrap split reveal">
+      {
+        project.roadmap.length > 0 && (
+          <div class="split__main">
+            <h2 class="h2">
+              Lo siguiente <span class="hand">en revelarse.</span>
+            </h2>
+            <ul class="list">
+              {project.roadmap.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+      <div class="split__side">
+        <p class="hand-note" style="color: var(--ink); font-size: 2rem">siguiente foto</p>
+        <a class="btn" href={`${base}/proyectos/${next.slug}/`}>{next.name} →</a>
+      </div>
+    </div>
+  </section>
+</Base>

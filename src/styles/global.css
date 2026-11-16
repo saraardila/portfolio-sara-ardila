@@ -1,0 +1,744 @@
+:root {
+  --ink: #6e1f2b;
+  --paper: #fff9ef;
+  --soft: #c5daf0;
+  --pop: #b8322a;
+  --sky: #f8dc8c;
+  --sky-soft: #fcefc4;
+  --pin: #f2c94c;
+  --grid-line: #ede3d0;
+  --veil: #d4cfc8;
+  --shadow: 0 10px 24px rgba(40, 20, 20, 0.16);
+  --serif: 'DM Serif Display', Georgia, serif;
+  --hand: 'Reenie Beanie', cursive;
+  --sans: 'Nunito Sans Variable', 'Nunito Sans', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+main {
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--ink);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--pop);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* ---------- Layout ---------- */
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.section {
+  padding-block: 96px;
+}
+
+.bg-grid {
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-stripes {
+  background: repeating-linear-gradient(90deg, var(--soft) 0 44px, var(--paper) 44px 88px);
+}
+
+.bg-ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.bg-sky-soft {
+  background: var(--sky-soft);
+}
+
+/* ---------- Type ---------- */
+.h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  line-height: 1;
+}
+
+.h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+}
+
+.h2--label {
+  align-self: flex-start;
+  background: var(--paper);
+  padding: 6px 18px;
+  border-radius: 12px;
+}
+
+.hand {
+  font-family: var(--hand);
+  font-size: 1.5em;
+  line-height: 0.8;
+}
+
+.hand-note {
+  font-family: var(--hand);
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--pop);
+}
+
+.lead {
+  max-width: 32rem;
+  font-size: 1.1875rem;
+}
+
+.small {
+  font-size: 0.9375rem;
+}
+
+.label {
+  font-weight: 800;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tag {
+  align-self: flex-start;
+  padding: 6px 14px;
+  background: var(--sky);
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 26px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn--ghost {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.bg-ink .btn {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+
+.bg-ink .btn--ghost {
+  background: transparent;
+  color: var(--paper);
+}
+
+/* ---------- Header / footer ---------- */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.nav a {
+  padding: 11px 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.nav .nav__cta {
+  padding-inline: 18px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  padding-block: 28px;
+  font-size: 0.9375rem;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  align-items: center;
+  padding-block: 72px 120px;
+}
+
+.hero__text {
+  flex: 999 1 460px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hero__hand {
+  display: block;
+  font-family: var(--hand);
+  font-size: 1.25em;
+  line-height: 0.85;
+  color: var(--pop);
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+
+.stack {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: center;
+  min-height: 360px;
+  position: relative;
+}
+
+.polaroid {
+  background: #fff;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.polaroid__caption {
+  font-family: var(--hand);
+  font-size: 2.125rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.stack .polaroid {
+  position: absolute;
+  top: 10px;
+  width: 230px;
+  height: 290px;
+}
+
+.stack .fan {
+  top: 20px;
+  transition: transform 0.35s ease;
+}
+
+.stack .fan--l {
+  transform: rotate(-9deg) translate(-34px, 0);
+}
+
+.stack .fan--r {
+  transform: rotate(8deg) translate(34px, 0);
+}
+
+.stack:hover .fan--l {
+  transform: rotate(-16deg) translate(-70px, 10px);
+}
+
+.stack:hover .fan--r {
+  transform: rotate(14deg) translate(70px, 10px);
+}
+
+.swatch {
+  width: 100%;
+  height: 200px;
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* ---------- Phone ---------- */
+.phone {
+  position: relative;
+  aspect-ratio: 1 / 2;
+  border: 5px solid var(--ink);
+  border-radius: 24px;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.phone img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.phone__pending {
+  font-family: var(--hand);
+  font-size: 1.625rem;
+  line-height: 1;
+  font-weight: 400;
+}
+
+/* El "velo" tapa la captura hasta que se revela al entrar en pantalla */
+.veil {
+  position: absolute;
+  inset: 0;
+  background: var(--veil);
+  opacity: 1;
+  transition: opacity 2.2s ease-out 0.3s;
+  pointer-events: none;
+}
+
+.is-visible .veil,
+.veil.is-visible {
+  opacity: 0;
+}
+
+/* ---------- Cards ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 28px;
+}
+
+.note {
+  background: #fff;
+  padding: 20px 20px 24px;
+  box-shadow: 0 8px 20px rgba(40, 20, 20, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: rotate(var(--r, 0deg));
+}
+
+.note:hover,
+.shot:hover {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+@keyframes wiggle {
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+/* ---------- La cuerda ---------- */
+.rope {
+  display: block;
+  width: 100%;
+  height: 60px;
+  margin-top: 40px;
+  color: var(--ink);
+}
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px 32px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: -44px;
+}
+
+.hang {
+  position: relative;
+  width: 310px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+  animation: sway 5.5s ease-in-out infinite;
+}
+
+.hang:nth-child(2) {
+  margin-top: 22px;
+  animation-delay: -1.8s;
+  animation-duration: 6.2s;
+}
+
+.hang:nth-child(3) {
+  animation-delay: -3.3s;
+  animation-duration: 5s;
+}
+
+.hang:hover,
+.hang:focus-within {
+  animation-play-state: paused;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+.pin {
+  width: 16px;
+  height: 36px;
+  background: var(--pin);
+  border-radius: 3px;
+  position: relative;
+  z-index: 1;
+}
+
+.hang__card {
+  width: 100%;
+  background: #fff;
+  padding: 18px 18px 22px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: -10px;
+}
+
+.hang__photo {
+  position: relative;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.hang__photo .phone {
+  height: 280px;
+}
+
+.hang__title {
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: 2.75rem;
+  line-height: 1;
+}
+
+.hang__card .btn {
+  align-self: flex-start;
+  padding: 11px 20px;
+}
+
+.pending {
+  height: 320px;
+  background: var(--veil);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* "esta, la buena" */
+.circle {
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: 34px;
+  height: 344px;
+  border: 5px solid var(--pop);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: rotate(-14deg) scale(0.6);
+  transition: opacity 0.6s ease-out 1.2s, transform 0.9s ease-out 1.2s;
+}
+
+.is-visible .circle {
+  opacity: 1;
+  transform: rotate(-5deg) scale(1);
+}
+
+.best {
+  position: absolute;
+  top: 52px;
+  right: -22px;
+  z-index: 2;
+  padding: 2px 12px 4px;
+  background: var(--paper);
+  box-shadow: 0 4px 10px rgba(40, 20, 20, 0.14);
+  font-family: var(--hand);
+  font-size: 2.375rem;
+  line-height: 1;
+  color: var(--pop);
+  transform: rotate(6deg);
+  pointer-events: none;
+}
+
+/* ---------- Página de proyecto ---------- */
+.back {
+  align-self: flex-start;
+  padding: 11px 0;
+  font-weight: 800;
+}
+
+.meta {
+  margin: 0;
+  max-width: 32rem;
+}
+
+.meta div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--ink);
+}
+
+.meta dt {
+  flex: 0 0 90px;
+}
+
+.meta dd {
+  margin: 0;
+  flex: 1 1 200px;
+}
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px 24px;
+}
+
+.shot {
+  margin: 0 auto;
+  width: 200px;
+  background: #fff;
+  padding: 14px 14px 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transform: rotate(var(--r, 0deg));
+}
+
+.shot .phone {
+  width: 100%;
+}
+
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
+}
+
+.split__main {
+  flex: 999 1 420px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.split__side {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stack-col {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ---------- Aparición con scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sin JavaScript todo se ve desde el principio */
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.no-js .veil {
+  opacity: 0;
+}
+
+.no-js .circle {
+  opacity: 1;
+  transform: rotate(-5deg) scale(1);
+}
+
+/* ---------- Móvil ---------- */
+@media (max-width: 720px) {
+  .section {
+    padding-block: 72px;
+  }
+
+  .hero {
+    padding-block: 40px 88px;
+    gap: 40px;
+  }
+
+  /* Cada foto lleva su propio trozo de cuerda */
+  .rope {
+    display: none;
+  }
+
+  .line {
+    margin-top: 40px;
+    gap: 56px;
+  }
+
+  .hang:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .hang::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: -50vw;
+    right: -50vw;
+    border-top: 3px solid var(--ink);
+  }
+
+  .best {
+    right: -6px;
+  }
+}
+
+/* ---------- Menos movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hang,
+  .pending,
+  .note:hover,
+  .shot:hover {
+    animation: none;
+  }
+
+  .reveal,
+  .veil,
+  .circle,
+  .stack .fan,
+  .btn {
+    transition: none;
+  }
+}

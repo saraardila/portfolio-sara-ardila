@@ -1,0 +1,23 @@
+---
+// Un móvil con la captura dentro. Si aún no hay imagen, muestra "revelándose…".
+interface Props {
+  src?: string;
+  alt: string;
+  /** En tamaños pequeños no cabe el texto de "revelándose…" */
+  compact?: boolean;
+}
+
+const { src, alt, compact = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="phone">
+  {
+    src ? (
+      <img src={`${base}${src}`} alt={alt} loading="lazy" />
+    ) : (
+      !compact && <span class="phone__pending">revelán­dose…</span>
+    )
+  }
+  {src && <div class="veil" aria-hidden="true" />}
+</div>

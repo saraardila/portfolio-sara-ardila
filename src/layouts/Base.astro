@@ -1,0 +1,77 @@
+---
+// Tipografías incluidas en el proyecto (no dependen de Google Fonts)
+import '@fontsource/dm-serif-display/400.css';
+import '@fontsource/reenie-beanie/400.css';
+import '@fontsource-variable/nunito-sans';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = `${base}/`;
+---
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+  <body>
+    <header class="wrap site-header">
+      <a class="brand" href={home} aria-label="Sara Ardila, inicio">
+        <svg aria-hidden="true" width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="8" y="2" width="18" height="30" rx="4"></rect>
+          <circle cx="17" cy="15" r="5.5"></circle>
+          <circle cx="17" cy="15" r="1.5" fill="currentColor"></circle>
+          <path d="M14 27h6"></path>
+        </svg>
+        Sara Ardila
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <a href={`${home}#proceso`}>Proceso</a>
+        <a href={`${home}#proyectos`}>Proyectos</a>
+        <a class="nav__cta" href={`${home}#contacto`}>Contacto</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="wrap site-footer">
+      <p>Sara Ardila · Madrid</p>
+      <p>Cuando no programo: fotografía, leer, viajar, pilates y animales.</p>
+    </footer>
+
+    <script>
+      // Revela los elementos cuando entran en pantalla (funciona en todos los navegadores)
+      const targets = document.querySelectorAll('.reveal, .develop');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.25 },
+      );
+      targets.forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
