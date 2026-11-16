@@ -1,0 +1,202 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { about } from '../data/about';
+import { links } from '../data/projects';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const total = String(about.timeline.length).padStart(2, '0');
+const now = about.now.filter((item) => item.value.trim() !== '');
+---
+
+<Base
+  title="Detrás de la cámara · Sara Ardila"
+  description="Quién es Sara Ardila: de la fotografía y el diseño al desarrollo Android con Kotlin y Jetpack Compose."
+>
+  <!-- 1. Presentación -->
+  <div class="bg-grid">
+    <section class="wrap hero">
+      <div class="hero__text">
+        <p class="tag">Sobre mí</p>
+        <h1 class="h1">Detrás <span class="hero__hand">de la cámara.</span></h1>
+        {about.intro.map((paragraph) => <p class="lead">{paragraph}</p>)}
+        <p class="scroll-cue" aria-hidden="true">baja y pasa el carrete ↓</p>
+      </div>
+
+      <div class="selfie develop">
+        <div class="pin" aria-hidden="true"></div>
+        <div class="polaroid selfie__card">
+          <div class="selfie__photo">
+            {
+              about.photo ? (
+                <img src={`${base}${about.photo}`} alt="Sara Ardila" />
+              ) : (
+                <span class="phone__pending">tu foto aquí</span>
+              )
+            }
+            {about.photo && <div class="veil" aria-hidden="true" />}
+          </div>
+          <p class="polaroid__caption">autorretrato</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 2. El carrete: trayectoria con scroll horizontal -->
+  <section class="reel" aria-labelledby="carrete">
+    <div class="reel__pin">
+      <div class="wrap reel__head">
+        <h2 id="carrete" class="h2">El <span class="hand">carrete.</span></h2>
+        <p class="reel__counter label" aria-hidden="true">
+          Foto <span data-counter>01</span> / {total}
+        </p>
+      </div>
+
+      <div class="film" aria-hidden="true"></div>
+      <ol class="reel__track">
+        {
+          about.timeline.map((m, i) => (
+            <li class={`frame frame--${m.tone}${m.current ? ' frame--current' : ''}`}>
+              <p class="frame__num">{String(i + 1).padStart(2, '0')}A</p>
+              <p class="frame__year">{m.year}</p>
+              <h3 class="frame__title">{m.title}</h3>
+              <p>{m.text}</p>
+              {m.current && <span class="frame__here" aria-hidden="true">aquí estoy</span>}
+            </li>
+          ))
+        }
+      </ol>
+      <div class="film" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- 3. Fuera de cámara: aficiones que se giran -->
+  <section class="bg-stripes section" aria-labelledby="fuera">
+    <div class="wrap">
+      <h2 id="fuera" class="h2 h2--label reveal">Fuera <span class="hand">de cámara.</span></h2>
+      <p class="hand-note off__hint">toca una foto para darle la vuelta</p>
+    </div>
+
+    <svg class="rope" aria-hidden="true" viewBox="0 0 1000 60" preserveAspectRatio="none">
+      <path d="M0 6 Q500 64 1000 6" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+    </svg>
+
+    <ul class="wrap line off">
+      {
+        about.offCamera.map((item) => (
+          <li class="hang hang--sm">
+            <div class="pin" aria-hidden="true" />
+            <button class="flip" type="button" aria-pressed="false">
+              <span class="flip__inner">
+                <span class="flip__face">
+                  <Icon name={item.icon} />
+                  <span class="flip__word">{item.word}</span>
+                </span>
+                <span class="flip__face flip__back">
+                  <span>{item.back}</span>
+                </span>
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- 4. Ahora mismo -->
+  <section class="section" aria-labelledby="ahora">
+    <div class="wrap stack-col">
+      <h2 id="ahora" class="h2 reveal">
+        <span class="rec" aria-hidden="true"></span>Ahora <span class="hand">mismo.</span>
+      </h2>
+      <dl class="now">
+        {
+          now.map((item, i) => (
+            <div class="now__item reveal" style={`--r: ${i % 2 ? '1.5deg' : '-1.5deg'}`}>
+              <dt class="label">{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- 5. Contacto -->
+  <section id="contacto" class="bg-ink section">
+    <div class="wrap split reveal">
+      <div class="split__main">
+        <h2 class="h2">¿Salimos <span class="hand" style="color: var(--soft)">en la misma foto?</span></h2>
+        <p style="max-width: 34rem">
+          Busco mi próximo equipo como Android Developer. Si crees que encajo, escríbeme.
+        </p>
+      </div>
+      <div class="btn-row" style="flex: 1 1 220px">
+        <a class="btn" href={links.linkedin}>LinkedIn</a>
+        <a class="btn btn--ghost" href={links.github}>GitHub</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Dar la vuelta a las fotos de "Fuera de cámara"
+  document.querySelectorAll<HTMLButtonElement>('.flip').forEach((button) => {
+    button.addEventListener('click', () => {
+      const pressed = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('aria-pressed', String(!pressed));
+    });
+  });
+
+  // El carrete: en escritorio se queda fijo y avanza en horizontal con el scroll.
+  // En móvil o con "reducir movimiento" es una tira normal que se desliza con el dedo.
+  const reel = document.querySelector<HTMLElement>('.reel');
+  if (reel) {
+    const pin = reel.querySelector<HTMLElement>('.reel__pin')!;
+    const track = reel.querySelector<HTMLElement>('.reel__track')!;
+    const counter = reel.querySelector<HTMLElement>('[data-counter]')!;
+    const frames = Array.from(track.querySelectorAll<HTMLElement>('.frame'));
+    const wide = window.matchMedia('(min-width: 721px) and (prefers-reduced-motion: no-preference)');
+    let distance = 0;
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      if (!reel.classList.contains('reel--pinned') || distance <= 0) return;
+      const progress = Math.min(1, Math.max(0, -reel.getBoundingClientRect().top / distance));
+      track.style.transform = `translate3d(${-progress * distance}px, 0, 0)`;
+      const index = Math.min(frames.length - 1, Math.round(progress * (frames.length - 1)));
+      counter.textContent = String(index + 1).padStart(2, '0');
+      frames.forEach((frame, i) => frame.classList.toggle('is-developed', i <= index));
+    };
+
+    const layout = () => {
+      if (!wide.matches) {
+        reel.classList.remove('reel--pinned');
+        reel.style.height = '';
+        track.style.transform = '';
+        frames.forEach((frame) => frame.classList.add('is-developed'));
+        return;
+      }
+      reel.classList.add('reel--pinned');
+      track.style.transform = '';
+      distance = Math.max(0, track.scrollWidth - pin.clientWidth);
+      reel.style.height = `${distance + window.innerHeight}px`;
+      update();
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
+    window.addEventListener('resize', layout);
+    wide.addEventListener('change', layout);
+    layout();
+  }
+</script>

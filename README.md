@@ -42,8 +42,9 @@ Mientras una captura no tenga ruta, el móvil muestra "revelándose…".
 
 ## Publicar en GitHub Pages
 
-1. Crea un repo llamado `saraardila.github.io` y sube este proyecto a la rama `main`.
-2. En el repo: Settings → Pages → Source → **GitHub Actions**.
-3. Cada push a `main` publica la web sola (`.github/workflows/deploy.yml`).
+La web vive en https://saraardila.github.io/portfolio-sara-ardila/
 
-Si prefieres otro nombre de repo (por ejemplo `portfolio`), añade `base: '/portfolio'` en `astro.config.mjs`.
+1. En el repo: Settings → Pages → Source → **GitHub Actions**.
+2. Cada push a `main` publica la web sola (`.github/workflows/deploy.yml`). El progreso se ve en la pestaña **Actions**.
+
+Si renombras el repo, cambia `base` en `astro.config.mjs` por el nuevo nombre.

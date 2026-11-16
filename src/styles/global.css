@@ -22,7 +22,6 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 main {
@@ -36,7 +35,6 @@ body {
   font-family: var(--sans);
   font-size: 1.0625rem;
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
 img {
@@ -109,6 +107,7 @@ p {
 
 .h2--label {
   align-self: flex-start;
+  width: fit-content;
   background: var(--paper);
   padding: 6px 18px;
   border-radius: 12px;
@@ -739,6 +738,377 @@ p {
   .circle,
   .stack .fan,
   .btn {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   Página "Detrás de la cámara" (/sobre-mi/)
+   ========================================================= */
+
+.scroll-cue {
+  font-family: var(--hand);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--pop);
+  animation: nudge 2.2s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* Autorretrato colgado */
+.selfie {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+  animation: sway 6s ease-in-out infinite;
+}
+
+.selfie__card {
+  width: 280px;
+  margin-top: -10px;
+  transform: rotate(3deg);
+}
+
+.selfie__photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.selfie__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* El carrete */
+.reel {
+  position: relative;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.reel__pin {
+  padding-block: 88px 96px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.reel--pinned .reel__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding-block: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+
+.reel__head {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 32px;
+}
+
+.reel__counter {
+  font-variant-numeric: tabular-nums;
+  color: var(--sky);
+}
+
+.reel__head .hand {
+  color: var(--soft);
+}
+
+.film {
+  height: 22px;
+  min-width: 100%;
+  width: max-content;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 20px, var(--paper) 20px 34px);
+  border-block: 6px solid #3e0f17;
+}
+
+.reel__track {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  padding: 18px max(24px, calc((100vw - 1120px) / 2 + 24px));
+  background: #3e0f17;
+  will-change: transform;
+}
+
+.frame {
+  position: relative;
+  width: 320px;
+  min-height: 360px;
+  padding: 24px 26px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-snap-align: center;
+  color: var(--ink);
+  filter: grayscale(1) contrast(0.8);
+  opacity: 0.5;
+  transform: scale(0.96);
+  transition: filter 0.7s ease, opacity 0.7s ease, transform 0.7s ease;
+}
+
+.frame.is-developed,
+.no-js .frame {
+  filter: none;
+  opacity: 1;
+  transform: none;
+}
+
+.frame--paper {
+  background: var(--paper);
+}
+
+.frame--soft {
+  background: var(--soft);
+}
+
+.frame--sky {
+  background: var(--sky);
+}
+
+.frame--ink {
+  background: var(--pop);
+  color: var(--paper);
+}
+
+.frame__num {
+  font-weight: 800;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+}
+
+.frame__year {
+  font-family: var(--serif);
+  font-size: 5rem;
+  line-height: 0.9;
+}
+
+.frame__title {
+  margin: 0;
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.frame__here {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  padding: 2px 14px 4px;
+  background: var(--paper);
+  color: var(--pop);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  font-family: var(--hand);
+  font-size: 2.125rem;
+  line-height: 1;
+  transform: rotate(5deg);
+}
+
+/* Fuera de cámara */
+.off__hint {
+  margin-top: 16px;
+  font-size: 2.125rem;
+}
+
+.off {
+  list-style: none;
+  padding-bottom: 24px;
+}
+
+.hang--sm {
+  width: 190px;
+}
+
+.off {
+  gap: 40px 28px;
+}
+
+.flip {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-top: -10px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  perspective: 900px;
+}
+
+.flip__inner {
+  position: relative;
+  display: block;
+  height: 250px;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.flip[aria-pressed='true'] .flip__inner {
+  transform: rotateY(180deg);
+}
+
+.flip:hover .flip__inner {
+  transform: rotateY(12deg);
+}
+
+.flip[aria-pressed='true']:hover .flip__inner {
+  transform: rotateY(168deg);
+}
+
+.flip__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  backface-visibility: hidden;
+  text-align: center;
+}
+
+.flip__back {
+  transform: rotateY(180deg);
+  background: var(--sky);
+  font-weight: 600;
+}
+
+.flip__word {
+  font-family: var(--hand);
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.icon {
+  width: 64px;
+  height: 64px;
+  color: var(--pop);
+}
+
+/* Ahora mismo */
+.rec {
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  margin-right: 0.35em;
+  vertical-align: 0.15em;
+  border-radius: 50%;
+  background: var(--pop);
+  animation: rec 1.2s steps(2, jump-none) infinite;
+}
+
+@keyframes rec {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.now {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 24px;
+}
+
+.now__item {
+  padding: 22px 22px 26px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(40, 20, 20, 0.14);
+  border-top: 6px solid var(--pin);
+  rotate: var(--r, 0deg);
+}
+
+.now__item dd {
+  margin: 6px 0 0;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.15;
+}
+
+/* Botón para llegar aquí desde la home */
+.teaser-hand {
+  font-family: var(--hand);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--sky);
+}
+
+@media (max-width: 720px) {
+  .frame {
+    width: 270px;
+    min-height: 330px;
+  }
+
+  .frame__year {
+    font-size: 4rem;
+  }
+
+  .off {
+    gap: 40px 16px;
+  }
+
+  .hang--sm {
+    width: calc(50% - 8px);
+  }
+
+  .hang--sm:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .flip__inner {
+    height: 200px;
+  }
+
+  .flip__word {
+    font-size: 2rem;
+  }
+
+  .icon {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue,
+  .selfie,
+  .rec {
+    animation: none;
+  }
+
+  .frame,
+  .flip__inner {
     transition: none;
   }
 }
