@@ -42,26 +42,42 @@ const now = about.now.filter((item) => item.value.trim() !== '');
     </section>
   </div>
 
-  <!-- 2. El carrete: trayectoria con scroll horizontal -->
+  <!-- 2. El carrete: trayectoria con scroll horizontal, de lo más reciente a lo más antiguo -->
   <section class="reel" aria-labelledby="carrete">
     <div class="reel__pin">
       <div class="wrap reel__head">
-        <h2 id="carrete" class="h2">El <span class="hand">carrete.</span></h2>
+        <div>
+          <h2 id="carrete" class="h2">El carrete, <span class="hand">rebobinado.</span></h2>
+          <p class="reel__sub">De lo último a donde empezó todo.</p>
+        </div>
         <p class="reel__counter label" aria-hidden="true">
           Foto <span data-counter>01</span> / {total}
         </p>
       </div>
 
+      <nav class="wrap reel__nav" aria-label="Ir a cada etapa">
+        {
+          about.timeline.map((m, i) => (
+            <button class="chip" type="button" data-go={i} aria-current={i === 0 ? 'true' : undefined}>
+              {m.short}
+            </button>
+          ))
+        }
+      </nav>
+
       <div class="film" aria-hidden="true"></div>
       <ol class="reel__track">
         {
           about.timeline.map((m, i) => (
-            <li class={`frame frame--${m.tone}${m.current ? ' frame--current' : ''}`}>
-              <p class="frame__num">{String(i + 1).padStart(2, '0')}A</p>
-              <p class="frame__year">{m.year}</p>
-              <h3 class="frame__title">{m.title}</h3>
-              <p>{m.text}</p>
-              {m.current && <span class="frame__here" aria-hidden="true">aquí estoy</span>}
+            <li class={`frame frame--${m.tone}${m.current ? ' frame--current' : ''}`} data-frame={i}>
+              <p class="frame__num">
+                {String(i + 1).padStart(2, '0')}A · {m.kind}
+              </p>
+              <p class="frame__year">{m.period}</p>
+              <h3 class="frame__title">{m.role}</h3>
+              {m.place && <p class="frame__place">{m.place}</p>}
+              <p class="frame__text">{m.text}</p>
+              {m.current && <span class="frame__here" aria-hidden="true">lo último</span>}
             </li>
           ))
         }
@@ -150,51 +166,105 @@ const now = about.now.filter((item) => item.value.trim() !== '');
 
   // El carrete: en escritorio se queda fijo y avanza en horizontal con el scroll.
   // En móvil o con "reducir movimiento" es una tira normal que se desliza con el dedo.
+  // Los botones de años llevan directamente a cada fotograma.
   const reel = document.querySelector<HTMLElement>('.reel');
   if (reel) {
     const pin = reel.querySelector<HTMLElement>('.reel__pin')!;
     const track = reel.querySelector<HTMLElement>('.reel__track')!;
     const counter = reel.querySelector<HTMLElement>('[data-counter]')!;
     const frames = Array.from(track.querySelectorAll<HTMLElement>('.frame'));
+    const chips = Array.from(reel.querySelectorAll<HTMLButtonElement>('[data-go]'));
     const wide = window.matchMedia('(min-width: 721px) and (prefers-reduced-motion: no-preference)');
+    const smooth: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
     let distance = 0;
     let ticking = false;
+    let current = -1;
+
+    const pinned = () => reel.classList.contains('reel--pinned');
+
+    // Desplazamiento del carrete que deja el fotograma i centrado en pantalla
+    const offsetFor = (i: number) => {
+      const frame = frames[i];
+      const target = frame.offsetLeft + frame.offsetWidth / 2 - pin.clientWidth / 2;
+      return Math.min(distance, Math.max(0, target));
+    };
+
+    const setActive = (index: number) => {
+      if (index === current) return;
+      current = index;
+      counter.textContent = String(index + 1).padStart(2, '0');
+      chips.forEach((chip, i) => {
+        if (i === index) chip.setAttribute('aria-current', 'true');
+        else chip.removeAttribute('aria-current');
+      });
+      if (pinned()) frames.forEach((frame, i) => frame.classList.toggle('is-developed', i <= index));
+    };
+
+    // El fotograma activo es el que queda más cerca del centro
+    const nearest = (offset: number) => {
+      const center = offset + pin.clientWidth / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      frames.forEach((frame, i) => {
+        const d = Math.abs(frame.offsetLeft + frame.offsetWidth / 2 - center);
+        if (d < bestDist) {
+          bestDist = d;
+          best = i;
+        }
+      });
+      return best;
+    };
 
     const update = () => {
       ticking = false;
-      if (!reel.classList.contains('reel--pinned') || distance <= 0) return;
-      const progress = Math.min(1, Math.max(0, -reel.getBoundingClientRect().top / distance));
-      track.style.transform = `translate3d(${-progress * distance}px, 0, 0)`;
-      const index = Math.min(frames.length - 1, Math.round(progress * (frames.length - 1)));
-      counter.textContent = String(index + 1).padStart(2, '0');
-      frames.forEach((frame, i) => frame.classList.toggle('is-developed', i <= index));
+      if (pinned()) {
+        if (distance <= 0) return;
+        const progress = Math.min(1, Math.max(0, -reel.getBoundingClientRect().top / distance));
+        const offset = progress * distance;
+        track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+        setActive(nearest(offset));
+      } else {
+        setActive(nearest(pin.scrollLeft));
+      }
     };
 
+    const requestUpdate = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    const go = (i: number) => {
+      if (pinned()) {
+        const reelTop = reel.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: reelTop + offsetFor(i), behavior: smooth });
+      } else {
+        pin.scrollTo({ left: offsetFor(i), behavior: smooth });
+      }
+    };
+
+    chips.forEach((chip) => chip.addEventListener('click', () => go(Number(chip.dataset.go))));
+    frames.forEach((frame, i) => frame.addEventListener('click', () => go(i)));
+
     const layout = () => {
+      track.style.transform = '';
       if (!wide.matches) {
         reel.classList.remove('reel--pinned');
         reel.style.height = '';
-        track.style.transform = '';
+        distance = Math.max(0, pin.scrollWidth - pin.clientWidth);
         frames.forEach((frame) => frame.classList.add('is-developed'));
-        return;
+      } else {
+        reel.classList.add('reel--pinned');
+        distance = Math.max(0, track.scrollWidth - pin.clientWidth);
+        reel.style.height = `${distance + window.innerHeight}px`;
       }
-      reel.classList.add('reel--pinned');
-      track.style.transform = '';
-      distance = Math.max(0, track.scrollWidth - pin.clientWidth);
-      reel.style.height = `${distance + window.innerHeight}px`;
+      current = -1;
       update();
     };
 
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(update);
-        }
-      },
-      { passive: true },
-    );
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    pin.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', layout);
     wide.addEventListener('change', layout);
     layout();

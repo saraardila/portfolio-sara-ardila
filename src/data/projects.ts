@@ -52,20 +52,25 @@ export const projects: Project[] = [
     role: 'Diseño y desarrollo',
     stack: 'Kotlin · Jetpack Compose · Hilt · Room · Retrofit · DataStore',
     repo: 'https://github.com/saraardila/BookNook',
+    cover: '/capturas/booknook-inicio.webp',
     tone: 'soft',
     featured: true,
-    // PENDIENTE: añade `src` a cada captura cuando las tengas.
+    // Las 4 que se muestran. Para cambiar una, intercámbiala con alguna de las comentadas.
     shots: [
-      { caption: 'biblioteca' },
-      { caption: 'progreso' },
-      { caption: 'calendario' },
-      { caption: 'diario' },
+      { caption: 'descubrir', src: '/capturas/booknook-descubrir.webp' },
+      { caption: 'biblioteca', src: '/capturas/booknook-biblioteca.webp' },
+      { caption: 'calendario', src: '/capturas/booknook-calendario.webp' },
+      { caption: 'temas', src: '/capturas/booknook-temas.webp' },
+      // { caption: 'ficha del libro', src: '/capturas/booknook-ficha.webp' },
+      // { caption: 'compartir', src: '/capturas/booknook-compartir.webp' },
+      // { caption: 'diario', src: '/capturas/booknook-diario.webp' },
+      // { caption: 'tema summer', src: '/capturas/booknook-temas-summer.webp' },
     ],
     howItsMade: [
       {
         hand: '1. encuadro',
         label: 'Diseño',
-        text: 'Theming dinámico, animaciones y pantallas edge-to-edge.',
+        text: 'Cuatro temas que cambian toda la app, papel y color de tinta para el diario y una tarjeta para compartir tu progreso. Theming dinámico, animaciones y edge-to-edge.',
       },
       {
         hand: '2. disparo',
@@ -85,21 +90,36 @@ export const projects: Project[] = [
   },
   {
     slug: 'habit-tracker',
-    name: 'Habit Tracker',
-    short: 'Hábitos diarios con animaciones.',
+    name: 'Cozy Habits',
+    short: 'Hábitos diarios con una mascota que te acompaña.',
     summary:
-      'Seguimiento de hábitos diarios con animaciones en Compose y persistencia local. Pensada para que marcar un hábito sea un gesto agradable.',
+      'Hábitos con checklist, calendario, progreso diario y un diario de ánimo. Una mascota reacciona a lo que llevas hecho y las rachas desbloquean nuevas mascotas e insignias.',
     stackShort: 'Kotlin · Compose · Room',
     status: 'En desarrollo',
     role: 'Diseño y desarrollo',
     stack: 'Kotlin · Jetpack Compose · Hilt · Coroutines · Room',
     repo: 'https://github.com/saraardila/habit-tracker-compose',
+    cover: '/capturas/habits-inicio.webp',
     tone: 'sky',
-    // PENDIENTE: capturas.
-    shots: [],
+    // Las 4 que se muestran. Para cambiar una, intercámbiala con alguna de las comentadas.
+    shots: [
+      { caption: 'nuevo hábito', src: '/capturas/habits-nuevo.webp' },
+      { caption: 'progreso', src: '/capturas/habits-progreso.webp' },
+      { caption: 'insignias', src: '/capturas/habits-insignias.webp' },
+      { caption: 'diario', src: '/capturas/habits-diario.webp' },
+      // { caption: 'calendario', src: '/capturas/habits-calendario.webp' },
+      // { caption: 'ajustes', src: '/capturas/habits-ajustes.webp' },
+      // { caption: 'diario vacío', src: '/capturas/habits-diario-vacio.webp' },
+      // { caption: 'empezando', src: '/capturas/habits-vacio.webp' },
+    ],
     howItsMade: [
       {
-        hand: '1. disparo',
+        hand: '1. encuadro',
+        label: 'Diseño',
+        text: 'Una mascota que cambia de expresión según tu progreso del día, mascotas que se desbloquean con las rachas y modo oscuro.',
+      },
+      {
+        hand: '2. disparo',
         label: 'Arquitectura',
         text: 'MVVM en Compose, con Hilt para la inyección de dependencias y Room para guardar los hábitos en local.',
       },
