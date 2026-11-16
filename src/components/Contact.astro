@@ -1,0 +1,94 @@
+---
+// Contacto: una postal con sello y matasellos. Se usa en la home y en "Sobre mí".
+import { links } from '../data/projects';
+import Logo from './Logo.astro';
+
+const linkedinLabel = links.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+const githubLabel = links.github.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section id="contacto" class="contact bg-grid" aria-labelledby="contacto-titulo">
+  <div class="wrap contact__wrap">
+    <h2 id="contacto-titulo" class="h2 contact__title reveal">
+      ¿Salimos en la <span class="hand">misma foto?</span>
+    </h2>
+
+    <article class="postcard reveal develop">
+      <div class="postcard__msg">
+        <div class="duo">
+          <a class="duo__pol duo__pol--you" href={links.linkedin}>
+            <span class="duo__tape" aria-hidden="true"></span>
+            <span class="duo__empty">
+              <span class="duo__plus" aria-hidden="true">+</span>
+              <span class="duo__ask">¿y tú?</span>
+            </span>
+            <span class="duo__cap">tu equipo</span>
+          </a>
+        </div>
+        <p class="postcard__text">
+          Esta foto aún está por revelar. Busco mi próximo equipo como Android Developer: si te encaja lo que has visto,
+          escríbeme y salimos juntos en ella.
+        </p>
+        <p class="postcard__sign">Sara</p>
+      </div>
+
+      <div class="postcard__side">
+        <div class="postcard__top">
+          <div class="postmark" aria-hidden="true">
+            <span>Madrid</span>
+            <span class="postmark__year">{year}</span>
+          </div>
+          <div class="stamp" aria-hidden="true">
+            <Logo size={64} />
+            <span class="stamp__value">Android</span>
+          </div>
+        </div>
+
+        <ul class="postcard__lines">
+          <li>
+            <span class="label">LinkedIn</span>
+            <a href={links.linkedin}>{linkedinLabel}</a>
+          </li>
+          <li>
+            <span class="label">GitHub</span>
+            <a href={links.github}>{githubLabel}</a>
+          </li>
+          {
+            links.email && (
+              <li>
+                <span class="label">Email</span>
+                <a href={`mailto:${links.email}`}>{links.email}</a>
+                <button class="copy" type="button" data-copy={links.email}>
+                  copiar
+                </button>
+              </li>
+            )
+          }
+        </ul>
+
+        <div class="btn-row">
+          <a class="btn" href={links.linkedin}>Escríbeme por LinkedIn</a>
+          {links.cv && <a class="btn btn--ghost" href={`${base}${links.cv}`} download>Descargar CV</a>}
+          <a class="btn btn--ghost only-mobile" href={links.github}>Ver mi GitHub</a>
+          {links.email && <a class="btn btn--ghost" href={`mailto:${links.email}`}>Mándame un email</a>}
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+        button.textContent = '¡copiado!';
+        setTimeout(() => (button.textContent = 'copiar'), 1800);
+      } catch {
+        // Si el navegador no deja copiar, el enlace sigue funcionando
+      }
+    });
+  });
+</script>

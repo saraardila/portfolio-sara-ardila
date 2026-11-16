@@ -203,9 +203,37 @@ p {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 800;
+  gap: 12px;
   text-decoration: none;
+}
+
+.brand .logo {
+  flex: none;
+  transition: rotate 0.3s ease;
+}
+
+.brand:hover .logo {
+  rotate: -8deg;
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand__name {
+  font-family: var(--serif);
+  font-size: 1.625rem;
+  line-height: 1;
+}
+
+.brand__role {
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  line-height: 0.9;
+  color: var(--pop);
+  transform: rotate(-2deg);
+  transform-origin: left center;
 }
 
 .nav {
@@ -427,6 +455,38 @@ p {
   75% {
     transform: rotate(3deg);
   }
+}
+
+/* ---------- Qué aporto ---------- */
+.strength__icon {
+  width: 48px;
+  height: 48px;
+  color: var(--pop);
+}
+
+.strength__title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.15;
+}
+
+.strength__tags {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.strength__tags li {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--soft);
+  font-size: 0.8125rem;
+  font-weight: 700;
 }
 
 /* ---------- La cuerda ---------- */
@@ -736,6 +796,524 @@ p {
   }
 }
 
+/* =========================================================
+   Contacto: la postal
+   ========================================================= */
+
+.contact {
+  padding-block: 112px 128px;
+}
+
+.contact__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.contact__title {
+  text-align: center;
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+}
+
+.postcard {
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(40, 20, 20, 0.18);
+  rotate: -1.5deg;
+  transition: rotate 0.4s ease;
+}
+
+.postcard:hover {
+  rotate: 0deg;
+}
+
+/* Borde de correo aéreo */
+.postcard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 8px;
+  background: repeating-linear-gradient(135deg, var(--pop) 0 14px, #fff 14px 28px, var(--soft) 28px 42px, #fff 42px 56px);
+  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+.postcard__msg,
+.postcard__side {
+  padding: 56px 48px;
+}
+
+.postcard__msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  border-right: 2px dashed var(--grid-line);
+}
+
+/* Las dos polaroids: tú y el hueco para su equipo */
+.duo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 6px;
+}
+
+.duo__pol {
+  position: relative;
+  flex: 0 1 190px;
+  margin: 0;
+  padding: 10px 10px 8px;
+  background: #fff;
+  box-shadow: 0 10px 22px rgba(40, 20, 20, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: rotate 0.3s ease, translate 0.3s ease;
+}
+
+.duo__pol--me {
+  rotate: -5deg;
+}
+
+.duo__pol--you {
+  flex-basis: 230px;
+  rotate: 3deg;
+}
+
+.duo__pol--you:hover,
+.duo__pol--you:focus-visible {
+  rotate: 0deg;
+  translate: 0 -6px;
+}
+
+.duo__tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 64px;
+  height: 20px;
+  margin-left: -32px;
+  background: var(--pin);
+  opacity: 0.9;
+  rotate: -4deg;
+}
+
+.duo__pol img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.duo__empty {
+  aspect-ratio: 4 / 5;
+  border: 3px dashed var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: repeating-linear-gradient(45deg, #fff 0 10px, #fbf4e6 10px 20px);
+}
+
+.duo__plus {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--pin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 800;
+  transition: scale 0.3s ease;
+}
+
+.duo__pol--you:hover .duo__plus {
+  scale: 1.15;
+}
+
+.duo__ask {
+  font-family: var(--hand);
+  font-size: 2.125rem;
+  line-height: 1;
+  color: var(--pop);
+}
+
+.duo__pol figcaption,
+.duo__cap {
+  font-family: var(--hand);
+  font-size: 1.75rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.postcard__text {
+  font-family: var(--hand);
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+
+.postcard__sign {
+  align-self: flex-end;
+  font-family: var(--hand);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--pop);
+  transform: rotate(-4deg);
+}
+
+.postcard__side {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.postcard__top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 120px;
+}
+
+/* Sello */
+.stamp {
+  width: 96px;
+  padding: 10px 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: var(--sky);
+  color: var(--ink);
+  /* Borde dentado de sello */
+  border: 6px dotted #fff;
+  outline: 2px solid var(--sky);
+  outline-offset: -2px;
+  box-shadow: 0 0 0 1px rgba(40, 20, 20, 0.08);
+  rotate: 6deg;
+  opacity: 0;
+  scale: 1.6;
+  transition: opacity 0.4s ease 0.3s, scale 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) 0.3s;
+}
+
+.stamp svg {
+  width: 64px;
+  height: 64px;
+}
+
+.stamp__value {
+  font-weight: 800;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Matasellos */
+.postmark {
+  width: 112px;
+  height: 112px;
+  margin-right: -44px;
+  margin-top: 30px;
+  position: relative;
+  z-index: 1;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  rotate: -14deg;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.9s;
+  mix-blend-mode: multiply;
+}
+
+.postmark::after {
+  content: '';
+  position: absolute;
+  left: 92%;
+  top: 50%;
+  width: 110px;
+  height: 30px;
+  margin-top: -15px;
+  background: repeating-linear-gradient(transparent 0 6px, var(--ink) 6px 9px);
+  -webkit-mask: radial-gradient(ellipse at left, #000 40%, transparent 75%);
+  mask: radial-gradient(ellipse at left, #000 40%, transparent 75%);
+  opacity: 0.7;
+}
+
+.postmark__year {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  letter-spacing: 0;
+}
+
+.postcard.is-visible .stamp,
+.no-js .stamp {
+  opacity: 1;
+  scale: 1;
+}
+
+.postcard.is-visible .postmark,
+.no-js .postmark {
+  opacity: 0.85;
+}
+
+/* Líneas de dirección */
+.postcard__lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.postcard__lines li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  padding: 12px 0;
+  border-bottom: 2px solid var(--grid-line);
+}
+
+.postcard__lines .label {
+  flex: 0 0 76px;
+}
+
+.postcard__lines a {
+  font-family: var(--hand);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.postcard__lines a:hover {
+  text-decoration: underline;
+}
+
+.copy {
+  margin-left: auto;
+  padding: 6px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .postcard {
+    grid-template-columns: 1fr;
+    rotate: 0deg;
+  }
+
+  .postcard__msg,
+  .postcard__side {
+    padding: 40px 28px;
+  }
+
+  .postcard__msg {
+    border-right: 0;
+    border-bottom: 2px dashed var(--grid-line);
+  }
+
+  .postcard__top {
+    min-height: 0;
+  }
+
+  .postcard__text {
+    font-size: 1.5rem;
+  }
+
+  .duo__pol {
+    flex-basis: 150px;
+  }
+
+  .duo__ask {
+    font-size: 1.75rem;
+  }
+}
+
+/* En móvil la postal se compacta: fotos y mensaje, y debajo los botones con el sello al lado */
+.only-mobile {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .contact {
+    padding-block: 72px 88px;
+  }
+
+  .contact__wrap {
+    gap: 32px;
+  }
+
+  .postcard__msg {
+    padding: 36px 22px 26px;
+    gap: 12px;
+  }
+
+  .duo {
+    gap: 12px;
+  }
+
+  .duo__pol {
+    flex-basis: 132px;
+    padding: 8px 8px 6px;
+  }
+
+  .duo__pol--you {
+    flex-basis: 170px;
+  }
+
+  .duo__pol figcaption,
+  .duo__cap {
+    font-size: 1.5rem;
+  }
+
+  .duo__plus {
+    width: 36px;
+    height: 36px;
+    font-size: 1.375rem;
+  }
+
+  .duo__ask {
+    font-size: 1.5rem;
+  }
+
+  .postcard__text {
+    font-size: 1.375rem;
+  }
+
+  .postcard__sign {
+    font-size: 2rem;
+    margin-top: -6px;
+  }
+
+  .postcard__side {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 22px;
+  }
+
+  .postcard__lines,
+  .postmark {
+    display: none;
+  }
+
+  .postcard__top {
+    order: 2;
+    min-height: 0;
+  }
+
+  .stamp {
+    width: 74px;
+    padding: 6px 6px 4px;
+  }
+
+  .stamp svg {
+    width: 46px;
+    height: 46px;
+  }
+
+  .stamp__value {
+    font-size: 0.5625rem;
+  }
+
+  .postcard__side .btn-row {
+    flex: 1;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .postcard__side .btn {
+    text-align: center;
+    padding: 12px 14px;
+    font-size: 0.9375rem;
+  }
+
+  .only-mobile {
+    display: inline-block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .postcard,
+  .stamp,
+  .postmark {
+    transition: none;
+  }
+}
+
+/* ---------- Cabecera en móvil: todo en una línea ---------- */
+@media (max-width: 480px) {
+  .site-header {
+    flex-wrap: nowrap;
+    padding-block: 16px;
+  }
+
+  .brand__text {
+    display: none;
+  }
+
+  .brand .logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav {
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+
+  .nav a {
+    padding: 11px 9px;
+    font-size: 0.9375rem;
+  }
+
+  .nav .nav__cta {
+    padding-inline: 14px;
+    margin-left: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav a {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 345px) {
+  .nav a {
+    padding-inline: 6px;
+    font-size: 0.875rem;
+  }
+
+  .nav .nav__cta {
+    padding-inline: 12px;
+  }
+}
+
 /* ---------- Menos movimiento ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -818,8 +1396,29 @@ p {
 
 .reel__pin {
   padding-block: 88px 96px;
+}
+
+/* La tira de película: en móvil se desliza con el dedo */
+.reel__strip {
+  position: relative;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.reel__strip::-webkit-scrollbar {
+  display: none;
+}
+
+.reel__roll {
+  position: relative;
+  width: max-content;
+  will-change: transform;
+}
+
+.reel--pinned .reel__strip {
+  overflow: hidden;
 }
 
 .reel--pinned .reel__pin {
@@ -892,8 +1491,7 @@ p {
 
 .film {
   height: 22px;
-  min-width: 100%;
-  width: max-content;
+  width: 100%;
   background: repeating-linear-gradient(90deg, var(--ink) 0 20px, var(--paper) 20px 34px);
   border-block: 6px solid #3e0f17;
 }
@@ -907,7 +1505,6 @@ p {
   /* Espacio a los lados para que el primero y el último también puedan quedar centrados */
   padding: 18px max(24px, calc(50vw - 170px));
   background: #3e0f17;
-  will-change: transform;
 }
 
 .frame {
