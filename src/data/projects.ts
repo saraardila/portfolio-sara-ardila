@@ -128,10 +128,17 @@ export const projects: Project[] = [
   },
 ];
 
-/** Apps que todavía no tienen página propia */
-export const upcoming = ['Quote Cards', 'Reading Nook', 'Pilates Studio'];
+/** La tercera foto de la cuerda: algo que estás haciendo ahora mismo */
+export const upcoming = {
+  title: 'En el revelador',
+  text: 'BookNook con Kotlin Multiplatform y Compose Multiplatform.',
+};
 
 export const links = {
   linkedin: 'https://www.linkedin.com/in/sara-ardila/',
   github: 'https://github.com/saraardila',
+  /** Si quieres que aparezca tu email en Contacto, ponlo aquí. Vacío = no se muestra. */
+  email: '',
+  /** Tu CV en PDF, dentro de /public. Vacío = no se muestra el botón. */
+  cv: '/cv/Sara-Ardila-CV.pdf',
 };

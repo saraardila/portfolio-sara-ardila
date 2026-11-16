@@ -1,16 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
 import Phone from '../components/Phone.astro';
-import Cards from '../components/Cards.astro';
+import Contact from '../components/Contact.astro';
 import { projects, upcoming, links } from '../data/projects';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const process = [
-  { hand: '1. encuadro', label: 'Diseño', text: 'Flujos y pantallas pensando en quien va a usar la app.' },
-  { hand: '2. disparo', label: 'Código', text: 'Kotlin y Jetpack Compose sobre MVVM y Clean Architecture.' },
-  { hand: '3. revelo', label: 'Pulido', text: 'Animaciones y detalles hasta que la app se siente tan bien como se ve.' },
+const strengths = [
+  {
+    icon: 'code',
+    title: 'Código que se mantiene',
+    text: 'Arquitectura por capas para que la app crezca sin romperse.',
+    tags: ['Clean Architecture', 'MVVM', 'Hilt'],
+  },
+  {
+    icon: 'phone',
+    title: 'Interfaces que se sienten bien',
+    text: 'Ojo de diseñadora: espaciado, animaciones y detalle visual.',
+    tags: ['Jetpack Compose', 'Material 3', 'Figma'],
+  },
+  {
+    icon: 'team',
+    title: 'Equipo, no solo código',
+    text: 'Me entiendo con diseño, backend y QA desde el primer día.',
+    tags: ['Scrum', 'Code review', 'Git'],
+  },
 ];
+const tilts = ['-2deg', '1.5deg', '-1deg'];
 ---
 
 <Base
@@ -49,10 +65,52 @@ const process = [
     </section>
   </div>
 
-  <section id="proceso" class="bg-stripes section">
+  <section id="aporto" class="bg-stripes section">
     <div class="wrap stack-col">
-      <h2 class="h2 h2--label reveal">Así trabajo: <span class="hand">encuadro, disparo, revelo.</span></h2>
-      <Cards cards={process} />
+      <h2 class="h2 h2--label reveal">Qué <span class="hand">aporto.</span></h2>
+      <div class="cards">
+        {
+          strengths.map((item, i) => (
+            <div class="reveal">
+              <div class="note strength" style={`--r: ${tilts[i]}`}>
+                <svg
+                  class="strength__icon"
+                  aria-hidden="true"
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  {item.icon === 'code' && <path d="M17 14 L7 24 L17 34 M31 14 L41 24 L31 34 M27 10 L21 38" />}
+                  {item.icon === 'phone' && (
+                    <>
+                      <rect x="14" y="5" width="20" height="38" rx="4" />
+                      <circle cx="24" cy="20" r="6" />
+                      <path d="M21 37h6" />
+                    </>
+                  )}
+                  {item.icon === 'team' && (
+                    <>
+                      <circle cx="16" cy="17" r="6" />
+                      <circle cx="32" cy="17" r="6" />
+                      <path d="M5 40c1-7 6-11 11-11s10 4 11 11M21 40c1-7 6-11 11-11s10 4 11 11" />
+                    </>
+                  )}
+                </svg>
+                <h3 class="strength__title">{item.title}</h3>
+                <p>{item.text}</p>
+                <ul class="strength__tags">
+                  {item.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -96,32 +154,27 @@ const process = [
         <div class="pin" aria-hidden="true"></div>
         <div class="hang__card">
           <div class="pending">revelándose…</div>
-          <h3 class="hang__title">Próximamente</h3>
-          <p class="small">{upcoming.join(' · ')}</p>
+          <h3 class="hang__title">{upcoming.title}</h3>
+          <p class="small">{upcoming.text}</p>
         </div>
       </article>
     </div>
   </section>
 
-  <section id="contacto" class="bg-ink section">
+  <section id="conoceme" class="bg-ink section">
     <div class="wrap split reveal">
       <div class="split__main">
         <h2 class="h2">Detrás de <span class="hand" style="color: var(--soft)">la cámara.</span></h2>
-        <p style="max-width: 34rem">
-          Android Developer con formación en fotografía y diseño. Vengo de trabajar en una app con más de 10 millones
-          de usuarios y busco mi próximo equipo.
-        </p>
-        <p style="max-width: 34rem">
-          Kotlin · Jetpack Compose · Coroutines y Flow · Hilt · Room · Clean Architecture · Figma
-        </p>
+        <p style="max-width: 34rem">De la fotografía al desarrollo Android: mi trayectoria y lo que hago fuera de cámara.</p>
       </div>
       <div class="btn-row" style="flex: 1 1 220px">
-        <p class="teaser-hand">quién está detrás</p>
         <a class="btn" href={`${base}/sobre-mi/`}>Conóceme →</a>
-        <a class="btn btn--ghost" href={links.linkedin}>LinkedIn</a>
+        {links.cv && <a class="btn btn--ghost" href={`${base}${links.cv}`} download>Descargar CV</a>}
       </div>
     </div>
   </section>
+
+  <Contact />
 </Base>
 
 <style is:global>

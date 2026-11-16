@@ -30,7 +30,7 @@ export const about = {
   photo: '/img/sara.jpg' as string | undefined,
 
   intro: [
-    'Soy Sara, Android Developer en Madrid. Desarrollo apps nativas con Kotlin y Jetpack Compose, y cuido la arquitectura tanto como el detalle visual.',
+    'Soy Sara Ardila, Android Developer en Madrid. Desarrollo apps nativas con Kotlin y Jetpack Compose, y cuido la arquitectura tanto como el detalle visual.',
     'Antes de programar pasé años detrás de una cámara y diseñando. Esa mirada sigue conmigo: me fijo en el espaciado, en las animaciones y en cómo se siente una pantalla en la mano.',
   ],
 
@@ -103,7 +103,7 @@ export const about = {
 
   offCamera: [
     { word: 'leer', icon: 'book', back: 'Mi otra gran pasión. De aquí salió BookNook.' },
-    { word: 'pilates', icon: 'pilates', back: 'No todo va a ser programar!' },
+    /*{ word: 'pilates', icon: 'pilates', back: 'No todo va a ser programar!' },*/
     { word: 'fotografía', icon: 'camera', back: 'Sigue siendo mi forma de mirar las cosas.' },
     { word: 'viajar', icon: 'plane', back: 'Cada viaje, un carrete nuevo.' },
     { word: 'animales', icon: 'paw', back: 'Pregúntame por ellos y no paro.' },
