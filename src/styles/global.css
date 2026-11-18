@@ -573,8 +573,26 @@ p {
   padding: 16px;
 }
 
+/* Tamaño fijo del móvil: Safari (iPad, iPhone) no calcula bien el ancho solo con aspect-ratio */
 .hang__photo .phone {
+  flex: none;
+  width: 140px;
   height: 280px;
+}
+
+.hero-phone {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-phone .phone {
+  flex: none;
+  width: 200px;
+  height: 400px;
+}
+
+.photo .phone {
+  flex: none;
 }
 
 .hang__title {
