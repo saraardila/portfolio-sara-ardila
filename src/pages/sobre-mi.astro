@@ -176,7 +176,10 @@ const now = about.now.filter((item) => item.value.trim() !== '');
     const counter = reel.querySelector<HTMLElement>('[data-counter]')!;
     const frames = Array.from(track.querySelectorAll<HTMLElement>('.frame'));
     const chips = Array.from(reel.querySelectorAll<HTMLButtonElement>('[data-go]'));
-    const wide = window.matchMedia('(min-width: 721px) and (prefers-reduced-motion: no-preference)');
+    // Solo con ratón: en pantallas táctiles (móvil y tablet) el carrete se desliza con el dedo
+    const wide = window.matchMedia(
+      '(min-width: 721px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
+    );
     const smooth: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
     let distance = 0;
     let ticking = false;
